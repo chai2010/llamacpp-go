@@ -46,71 +46,35 @@ set(GGML_SRC
 #------------------------------------------------------------------------------
 
 add_library(ggmllib STATIC
-  ./include/webp.h
-  ./src/webp.c
-
-  ${WEBP_SRC}
+  ${GGML_SRC}
 )
 if(CMAKE_BUILD_TYPE STREQUAL "debug")
-  set_target_properties(webplib
-    PROPERTIES OUTPUT_NAME "webp-${OS}-debug"
+  set_target_properties(ggmllib
+    PROPERTIES OUTPUT_NAME "ggml-${OS}-debug"
   )
 else()
-  set_target_properties(webplib
-    PROPERTIES OUTPUT_NAME "webp-${OS}"
+  set_target_properties(ggmllib
+    PROPERTIES OUTPUT_NAME "ggml-${OS}"
   )
 endif()
 
-install(TARGETS webplib
+install(TARGETS ggmllib
   RUNTIME DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}
   LIBRARY DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}
   ARCHIVE DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 #------------------------------------------------------------------------------
-# WebP Demo
+# GGML Demo
 
-include_directories(AFTER
-  ./webplib
+# ggmlapp
+add_executable(ggmlapp
+  ./simple/simple-backend.cpp
+  ./simple/simple-ctx.cpp
+
+  ${GGML_SRC}
 )
-
-# webpapp
-add_executable(webpapp
-  ./demo/demo.cc
-
-  ./include/webp.h
-  ./src/webp.c
-
-  ${WEBP_SRC}
-)
-install(TARGETS webpapp
-  RUNTIME DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}
-  LIBRARY DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}
-  ARCHIVE DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}
-)
-
-#------------------------------------------------------------------------------
-# test
-
-include_directories(AFTER
-  ./test
-)
-
-add_executable(webptest
-  ./test/test.cc
-  ./test/test_util.cc
-  ./test/test_util_jpg.cc
-
-  #./test/webp_test.cc
-  #./test/webp_bench_test.cc
-
-  ./include/webp.h
-  ./src/webp.c
-
-  ${WEBP_SRC}
-)
-
-install(TARGETS webptest
+install(TARGETS ggmlapp
   RUNTIME DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}
   LIBRARY DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}
   ARCHIVE DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}
