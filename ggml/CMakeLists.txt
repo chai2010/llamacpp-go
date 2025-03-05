@@ -2,9 +2,11 @@
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 
-cmake_minimum_required (VERSION 3.0.0)
+cmake_minimum_required (VERSION 3.30.0)
 
 project(GGML)
+
+set(CMAKE_CXX_STANDARD 17)
 
 #------------------------------------------------------------------------------
 
@@ -16,17 +18,22 @@ add_definitions(
 include_directories(AFTER
   ./include
   ./src
+  ./src/ggml-cpu
 )
 
 set(GGML_SRC
-  #./src/ggml-alloc.c
-  #./src/ggml-quants.c
-  #./src/ggml.c
-#
-  #./src/ggml-backend-reg.cpp
-  #./src/ggml-backend.cpp
-  #./src/ggml-opt.cpp
-  #./src/ggml-threading.cpp
+  ./src/ggml.c
+  ./src/ggml-alloc.c
+  ./src/ggml-backend.cpp
+  ./src/ggml-backend-reg.cpp
+  ./src/ggml-opt.cpp
+  ./src/ggml-quants.c
+  ./src/ggml-threading.cpp
+
+  ./src/ggml-cpu/ggml-cpu.c
+  ./src/ggml-cpu/ggml-cpu.cpp
+  ./src/ggml-cpu/ggml-cpu-traits.cpp
+  ./src/ggml-cpu/ggml-cpu-quants.c
 )
 
 #------------------------------------------------------------------------------
@@ -34,9 +41,9 @@ set(GGML_SRC
 
 # ggmlapp
 add_executable(ggmlapp
-  #./simple/simple-backend.cpp
-  #./simple/simple-ctx.cpp
-  ./simple/foo.cpp
+  ./simple/simple-backend.cpp
+  ./simple/simple-ctx.cpp
+  #./simple/foo.cpp
 
   ${GGML_SRC}
 )
