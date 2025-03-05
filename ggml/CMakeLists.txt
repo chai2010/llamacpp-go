@@ -39,16 +39,14 @@ set(GGML_SRC
 #------------------------------------------------------------------------------
 # GGML Demo
 
-# ggmlapp
-add_executable(ggmlapp
-  ./simple/simple-ctx.cpp
-
+add_executable(simple-backend
+  ./simple/simple-backend.cpp
   ${GGML_SRC}
 )
-install(TARGETS ggmlapp
-  RUNTIME DESTINATION ${CMAKE_BINARY_DIR}
-  LIBRARY DESTINATION ${CMAKE_BINARY_DIR}
-  ARCHIVE DESTINATION ${CMAKE_BINARY_DIR}
+
+add_executable(simple-ctx
+  ./simple/simple-ctx.cpp
+  ${GGML_SRC}
 )
 
 #------------------------------------------------------------------------------
