@@ -41,9 +41,7 @@ set(GGML_SRC
 
 # ggmlapp
 add_executable(ggmlapp
-  ./simple/simple-backend.cpp
   ./simple/simple-ctx.cpp
-  #./simple/foo.cpp
 
   ${GGML_SRC}
 )
