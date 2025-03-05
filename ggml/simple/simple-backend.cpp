@@ -3,14 +3,6 @@
 #include "ggml-alloc.h"
 #include "ggml-backend.h"
 
-#ifdef GGML_USE_CUDA
-#include "ggml-cuda.h"
-#endif
-
-#ifdef GGML_USE_METAL
-#include "ggml-metal.h"
-#endif
-
 #include <cassert>
 #include <cmath>
 #include <cstdio>
@@ -47,22 +39,6 @@ void load_model(simple_model & model, float * a, float * b, int rows_A, int cols
     ggml_log_set(ggml_log_callback_default, nullptr);
 
     // initialize the backend
-#ifdef GGML_USE_CUDA
-    fprintf(stderr, "%s: using CUDA backend\n", __func__);
-    model.backend = ggml_backend_cuda_init(0); // init device 0
-    if (!model.backend) {
-        fprintf(stderr, "%s: ggml_backend_cuda_init() failed\n", __func__);
-    }
-#endif
-
-#ifdef GGML_USE_METAL
-    fprintf(stderr, "%s: using Metal backend\n", __func__);
-    model.backend = ggml_backend_metal_init();
-    if (!model.backend) {
-        fprintf(stderr, "%s: ggml_backend_metal_init() failed\n", __func__);
-    }
-#endif
-
     // if there aren't GPU Backends fallback to CPU backend
     if (!model.backend) {
         model.backend = ggml_backend_cpu_init();
