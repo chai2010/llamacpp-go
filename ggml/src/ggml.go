@@ -18,7 +18,7 @@ import (
 	"sync"
 	"unsafe"
 
-	_ "github.com/ollama/ollama/ml/backend/ggml/ggml/src/ggml-cpu"
+	_ "github.com/chai2010/llampcpp-go/ggml/src/ggml-cpu"
 )
 
 func init() {
